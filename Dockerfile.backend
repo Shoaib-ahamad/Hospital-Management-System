@@ -1,0 +1,38 @@
+# Multi-stage build for Hospital Management System Backend
+# Stage 1: Build
+FROM maven:3.8.1-openjdk-11 AS builder
+
+WORKDIR /app
+
+# Copy pom.xml and source code
+COPY pom.xml .
+COPY src/ ./src/
+
+# Build the application
+RUN mvn -DskipTests clean package
+
+# Stage 2: Runtime
+FROM openjdk:11-jre-slim
+
+WORKDIR /app
+
+# Copy built JAR from builder stage
+COPY --from=builder /app/target/hospital-management-system-1.0.0.jar .
+
+# Copy configuration files
+COPY src/main/resources/db.properties .
+
+# Expose port (adjust if needed)
+EXPOSE 8080
+
+# Set environment variables
+ENV DATABASE_URL=jdbc:mysql://mysql:3306/hospital_db
+ENV DATABASE_USER=root
+ENV DATABASE_PASSWORD=root@123
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD java -cp /app/hospital-management-system-1.0.0.jar com.hospital.util.DatabaseConnection || exit 1
+
+# Run the application
+CMD ["java", "-jar", "hospital-management-system-1.0.0.jar"]
