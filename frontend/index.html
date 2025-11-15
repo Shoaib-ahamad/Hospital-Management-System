@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="navbar-brand">
+                    <i class="fas fa-hospital"></i>
+                    <span>Hospital Management System</span>
+                </div>
+                <div class="navbar-menu" id="navbarMenu">
+                    <a href="#" class="nav-link active" onclick="showHome()">Home</a>
+                    <a href="#" class="nav-link" onclick="showAbout()">About</a>
+                    <a href="#" class="nav-link" id="logoutLink" style="display: none;" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to Hospital Management System</h1>
+                    <p>Your trusted healthcare management platform</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="showPatientLogin()">Patient Portal</button>
+                        <button class="btn btn-secondary" onclick="showAdminLogin()">Admin Portal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features">
+                <h2>Our Services</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-user-md"></i>
+                        <h3>Expert Doctors</h3>
+                        <p>Access to highly qualified and experienced medical professionals</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Easy Appointments</h3>
+                        <p>Book and manage your appointments online with ease</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-stethoscope"></i>
+                        <h3>Quality Care</h3>
+                        <p>Receive quality healthcare services at our hospital</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Patient Login Page -->
+        <div id="patientLoginPage" class="page">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2><i class="fas fa-user"></i> Patient Portal</h2>
+                    <form id="patientLoginForm" onsubmit="handlePatientLogin(event)">
+                        <div class="form-group">
+                            <label for="patientEmail">Email</label>
+                            <input type="email" id="patientEmail" placeholder="Enter your email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                    <div class="auth-toggle">
+                        <p>New patient? <a href="#" onclick="showPatientRegister()">Register here</a></p>
+                    </div>
+                    <button class="btn btn-light btn-block" onclick="showHome()">Back to Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Register Page -->
+        <div id="patientRegisterPage" class="page">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2><i class="fas fa-user-plus"></i> Patient Registration</h2>
+                    <form id="patientRegisterForm" onsubmit="handlePatientRegister(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regName">Full Name</label>
+                                <input type="text" id="regName" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="regEmail">Email</label>
+                                <input type="email" id="regEmail" placeholder="Your email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regPhone">Phone</label>
+                                <input type="tel" id="regPhone" placeholder="Your phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="regAge">Age</label>
+                                <input type="number" id="regAge" placeholder="Your age" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regGender">Gender</label>
+                                <select id="regGender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="regAddress">Address</label>
+                                <input type="text" id="regAddress" placeholder="Your address" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                    <div class="auth-toggle">
+                        <p>Already registered? <a href="#" onclick="showPatientLogin()">Login here</a></p>
+                    </div>
+                    <button class="btn btn-light btn-block" onclick="showHome()">Back to Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Login Page -->
+        <div id="adminLoginPage" class="page">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2><i class="fas fa-lock"></i> Admin Portal</h2>
+                    <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                        <div class="form-group">
+                            <label for="adminUsername">Username</label>
+                            <input type="text" id="adminUsername" placeholder="Enter admin username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminPassword">Password</label>
+                            <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                    <button class="btn btn-light btn-block" onclick="showHome()">Back to Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Dashboard -->
+        <div id="patientDashboard" class="page">
+            <div class="dashboard-header">
+                <h1>Welcome, <span id="patientName"></span></h1>
+                <p id="patientEmail"></p>
+            </div>
+            <div class="dashboard-content">
+                <div class="sidebar">
+                    <ul class="menu">
+                        <li><a href="#" onclick="showPatientAppointmentRequest()" class="menu-item active">
+                            <i class="fas fa-calendar-plus"></i> Request Appointment
+                        </a></li>
+                        <li><a href="#" onclick="showPatientAppointments()" class="menu-item">
+                            <i class="fas fa-calendar-check"></i> My Appointments
+                        </a></li>
+                        <li><a href="#" onclick="showPatientProfile()" class="menu-item">
+                            <i class="fas fa-user"></i> My Profile
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="main-content">
+                    <!-- Request Appointment Section -->
+                    <div id="appointmentRequestSection" class="content-section active">
+                        <h2>Request Appointment</h2>
+                        <form id="appointmentForm" onsubmit="handleAppointmentRequest(event)">
+                            <div class="form-group">
+                                <label for="specialization">Select Specialization</label>
+                                <select id="specialization" required>
+                                    <option value="">Choose a specialization</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="General">General Medicine</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointmentDate">Preferred Date</label>
+                                <input type="date" id="appointmentDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description (Optional)</label>
+                                <textarea id="description" placeholder="Describe your symptoms or reason for visit"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Request Appointment</button>
+                        </form>
+                    </div>
+
+                    <!-- My Appointments Section -->
+                    <div id="appointmentsSection" class="content-section">
+                        <h2>My Appointments</h2>
+                        <div id="appointmentsList" class="appointments-list">
+                            <p class="empty-state">No appointments yet. <a href="#" onclick="showPatientAppointmentRequest()">Request one now</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div id="profileSection" class="content-section">
+                        <h2>My Profile</h2>
+                        <div id="profileInfo" class="profile-info">
+                            <!-- Profile info will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="page">
+            <div class="dashboard-header">
+                <h1><i class="fas fa-cog"></i> Admin Dashboard</h1>
+            </div>
+            <div class="dashboard-content">
+                <div class="sidebar">
+                    <ul class="menu">
+                        <li><a href="#" onclick="showPendingRequests()" class="menu-item active">
+                            <i class="fas fa-list"></i> Pending Requests
+                        </a></li>
+                        <li><a href="#" onclick="showDoctorList()" class="menu-item">
+                            <i class="fas fa-user-md"></i> Manage Doctors
+                        </a></li>
+                        <li><a href="#" onclick="showAllAppointments()" class="menu-item">
+                            <i class="fas fa-calendar"></i> All Appointments
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="main-content">
+                    <!-- Pending Requests Section -->
+                    <div id="pendingRequestsSection" class="content-section active">
+                        <h2>Pending Appointment Requests</h2>
+                        <div id="pendingRequestsList" class="requests-list">
+                            <p class="empty-state">No pending requests</p>
+                        </div>
+                    </div>
+
+                    <!-- Manage Doctors Section -->
+                    <div id="doctorManagementSection" class="content-section">
+                        <h2>Manage Doctors</h2>
+                        <button class="btn btn-primary" onclick="showAddDoctor()">+ Add New Doctor</button>
+                        <div id="doctorsList" class="doctors-list">
+                            <p class="empty-state">No doctors available</p>
+                        </div>
+                    </div>
+
+                    <!-- Add Doctor Form -->
+                    <div id="addDoctorSection" class="content-section">
+                        <h2>Add New Doctor</h2>
+                        <form id="addDoctorForm" onsubmit="handleAddDoctor(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorName">Full Name</label>
+                                    <input type="text" id="doctorName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctorEmail">Email</label>
+                                    <input type="email" id="doctorEmail" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorSpecialization">Specialization</label>
+                                    <select id="doctorSpecialization" required>
+                                        <option value="">Select Specialization</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="General">General Medicine</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctorPhone">Phone</label>
+                                    <input type="tel" id="doctorPhone" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorQualification">Qualification</label>
+                                    <input type="text" id="doctorQualification" placeholder="e.g., MD" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctorExperience">Experience (years)</label>
+                                    <input type="number" id="doctorExperience" min="0" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Doctor</button>
+                            <button type="button" class="btn btn-light" onclick="showDoctorList()">Cancel</button>
+                        </form>
+                    </div>
+
+                    <!-- All Appointments Section -->
+                    <div id="allAppointmentsSection" class="content-section">
+                        <h2>All Appointments</h2>
+                        <div id="allAppointmentsList" class="appointments-list">
+                            <p class="empty-state">No appointments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="aboutPage" class="page">
+            <div class="about-container">
+                <h1>About Hospital Management System</h1>
+                <div class="about-content">
+                    <p>The Hospital Management System is a comprehensive web-based platform designed to streamline hospital operations and improve patient care.</p>
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Patient registration and login</li>
+                        <li>Online appointment booking</li>
+                        <li>Doctor management</li>
+                        <li>Appointment tracking</li>
+                        <li>Admin dashboard for hospital staff</li>
+                    </ul>
+                </div>
+                <button class="btn btn-primary" onclick="showHome()">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
